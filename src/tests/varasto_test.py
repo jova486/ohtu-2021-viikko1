@@ -8,7 +8,23 @@ class TestVarasto(unittest.TestCase):
 
     def test_konstruktori_luo_tyhjan_varaston(self):
         # https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertAlmostEqual
+
         self.assertAlmostEqual(self.varasto.saldo, 0)
+
+    def test_konstruktori_alustetaan_nolla_tilavuudella(self):
+        testiVarasto = Varasto(0)
+
+        self.assertAlmostEqual(testiVarasto.saldo, 0)
+
+    def test_konstruktori_alustetaan_negatiivisella_saldolla(self):
+        testiVarasto = Varasto(10,-1)
+
+        self.assertAlmostEqual(testiVarasto.saldo, 0)
+
+    def test_konstruktori_alustetaan_saldolla_joka_on_suurempi_kuin_tilavuus(self):
+        testiVarasto = Varasto(10,12)
+
+        self.assertAlmostEqual(testiVarasto.saldo, 10)
 
     def test_uudella_varastolla_oikea_tilavuus(self):
         self.assertAlmostEqual(self.varasto.tilavuus, 10)
@@ -38,3 +54,33 @@ class TestVarasto(unittest.TestCase):
 
         # varastossa pitäisi olla tilaa 10 - 8 + 2 eli 4
         self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 4)
+
+    def test_lisataan_yli_tilavuuden(self):
+        self.varasto.lisaa_varastoon(12)
+
+        # varastossa pitäisi olla tilaa 10 eli saldo pitäisi olla 10
+        self.assertAlmostEqual(self.varasto.saldo, 10)
+
+    def test_lisataan_negatiivinen_määrä(self):
+        self.varasto.lisaa_varastoon(-2)
+
+        # varastossa pitäisi olla nyt 0
+        self.assertAlmostEqual(self.varasto.saldo, 0)
+
+    def test_otetaan_yli_saldon(self):
+        self.varasto.lisaa_varastoon(2)
+        self.varasto.ota_varastosta(4)
+
+        # varastossa pitäisi olla 0 koska 4>2
+        self.assertAlmostEqual(self.varasto.saldo, 0)
+
+    def test_otetaan_negatiivinen_määrä(self):
+        maara = self.varasto.ota_varastosta(-2)
+
+        # varastossa pitäisi olla nyt 0
+        self.assertAlmostEqual(maara, 0)
+
+    def test_luokkan_str_metodi_muodostetaan_oikein(self):
+
+        # pitäisi palauttaa "saldo = 0, vielä tilaa 10"
+        self.assertAlmostEqual(str(self.varasto), "saldo = 0, vielä tilaa 10")
