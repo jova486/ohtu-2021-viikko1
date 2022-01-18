@@ -82,5 +82,5 @@ class TestVarasto(unittest.TestCase):
 
     def test_luokkan_str_metodi_muodostetaan_oikein(self):
 
-        # pitäisi palauttaa "saldo = 0, vielä tilaa 10"
-        self.assertAlmostEqual(str(self.varasto), "saldo = 0, vielä tilaa 10")
+        # pitäisi palauttaa "saldo = 0.0, vielä tilaa 10.0"
+        self.assertAlmostEqual(str(self.varasto), "saldo = 0.0, vielä tilaa 10.0")
